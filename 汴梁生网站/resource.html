@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP萌趣资源馆 - 汴祥生</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{
+            background:#fffbf5;
+            font-family:"PingFang SC","Microsoft YaHei",sans-serif;
+            padding:20px;
+        }
+        .container{
+            max-width:800px;
+            margin:50px auto;
+            background:#fff;
+            padding:40px;
+            border-radius:24px;
+            box-shadow:0 4px 20px rgba(0,0,0,0.05);
+        }
+        .title{
+            text-align:center;
+            color:#8B4513;
+            font-size:26px;
+            margin-bottom:40px;
+            font-weight:bold;
+        }
+        .section-title{
+            font-size:18px;
+            color:#8B4513;
+            margin:30px 0 15px;
+            font-weight:bold;
+        }
+        .avatar-img{
+            width:100%;
+            border-radius:16px;
+            cursor:pointer;
+        }
+        .emo-grid{
+            display:grid;
+            grid-template-columns:repeat(4,1fr);
+            gap:10px;
+        }
+        .emo-item{
+            width:100%;
+            border-radius:12px;
+            cursor:pointer;
+        }
+        .wallpaper-list{
+            display:grid;
+            grid-template-columns:repeat(2,1fr);
+            gap:12px;
+        }
+        .wallpaper-item{
+            width:100%;
+            border-radius:14px;
+            cursor:pointer;
+        }
+        .back{
+            display:block;
+            text-align:center;
+            margin-top:40px;
+            color:#8B4513;
+            text-decoration:none;
+        }
+
+        /* 点击放大查看图片 */
+        .preview-modal{
+            display:none;
+            position:fixed;
+            top:0;left:0;
+            width:100%;height:100%;
+            background:rgba(0,0,0,0.8);
+            z-index:999;
+            align-items:center;
+            justify-content:center;
+            flex-direction:column;
+            padding:20px;
+        }
+        .preview-img{
+            max-width:90%;
+            max-height:80vh;
+            border-radius:16px;
+            margin-bottom:20px;
+        }
+        .download-btn{
+            background:#8B4513;
+            color:#fff;
+            padding:12px 24px;
+            border-radius:12px;
+            text-decoration:none;
+            font-weight:bold;
+        }
+        .close-preview{
+            position:absolute;
+            top:20px;
+            right:20px;
+            color:#fff;
+            font-size:30px;
+            cursor:pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2 class="title">📁 IP萌趣资源馆</h2>
+
+    <!-- 头像区域 -->
+    <div class="section-title">👉 祥祥福福双人头像</div>
+    <img src="祥祥福福头像.jpg" class="avatar-img" onclick="preview(this.src)">
+
+    <!-- 表情包区域 -->
+    <div class="section-title">👉 祥福萌趣表情包</div>
+    <div class="emo-grid">
+        <img src="表情1.jpg" class="emo-item" onclick="preview(this.src)">
+        <img src="表情2.jpg" class="emo-item" onclick="preview(this.src)">
+        <img src="表情3.jpg" class="emo-item" onclick="preview(this.src)">
+        <img src="表情4.jpg" class="emo-item" onclick="preview(this.src)">
+        <img src="表情5.jpg" class="emo-item" onclick="preview(this.src)">
+        <img src="表情6.jpg" class="emo-item" onclick="preview(this.src)">
+        <img src="表情7.jpg" class="emo-item" onclick="preview(this.src)">
+        <img src="表情8.jpg" class="emo-item" onclick="preview(this.src)">
+    </div>
+
+    <!-- 壁纸区域 -->
+    <div class="section-title">👉 手机/电脑高清壁纸</div>
+    <div class="wallpaper-list">
+        <img src="壁纸1.jpg" class="wallpaper-item" onclick="preview(this.src)">
+        <img src="壁纸2.jpg" class="wallpaper-item" onclick="preview(this.src)">
+    </div>
+
+    <a href="index.html" class="back">返回首页</a>
+</div>
+
+<!-- 图片预览弹窗（点击查看大图 + 下载） -->
+<div class="preview-modal" id="previewModal">
+    <span class="close-preview" onclick="closePreview()">×</span>
+    <img src="" id="previewImg" class="preview-img">
+    <a id="downloadLink" class="download-btn" download>下载这张图片</a>
+</div>
+
+<script>
+    // 点击图片放大查看
+    function preview(src) {
+        document.getElementById("previewImg").src = src;
+        document.getElementById("downloadLink").href = src;
+        document.getElementById("previewModal").style.display = "flex";
+    }
+    // 关闭预览
+    function closePreview() {
+        document.getElementById("previewModal").style.display = "none";
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-CN" style="margin:0; padding:0;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>汴祥生 · 智慧花生 | 宋韵雅集</title>
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+KuaiLe&family=Noto+Serif+SC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        *{ margin:0; padding:0; box-sizing:border-box; }
+        html, body { margin:0; padding:0; width:100%; }
+        body{
+            background:#fffbf5; color:#2c241a;
+            font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", "Helvetica Neue", "Segoe UI", Roboto, Arial, sans-serif;
+            line-height: 1.65; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+            position:relative; overflow-x:hidden;
+        }
+        /* 标题字体美化 */
+        h1, h2, h3, .title, .banner-text, .banner-desc, .product-name, .modal-name, .ip-title,
+        .exp-card h3, .mode-card h3, .advantage-item h4, .footer-col h4, .ip-menu-title, .partner-item {
+            font-family: "Noto Serif SC", "华文楷书", "STKaiti", "KaiTi", "Georgia", serif;
+            font-weight: 700; letter-spacing: 0.03em;
+        }
+        .title {
+            font-size: 32px; color: #8B4513; margin-bottom: 32px; text-align: center; font-weight: 800;
+            letter-spacing: 6px; position: relative; display: inline-block; left: 50%; transform: translateX(-50%);
+            white-space: nowrap; padding-bottom: 14px; text-shadow: 2px 2px 6px rgba(139,69,19,0.08);
+            background: linear-gradient(135deg, #8B4513, #b45f2b); background-clip: text; -webkit-background-clip: text;
+            color: #8B4513;
+        }
+        @supports (background-clip: text) { .title { color: transparent; } }
+        /* 首页banner文字 - 修复可见性 */
+        .banner-text {
+            position: absolute; top: 50%; left: 20%; transform: translate(-50%, -50%);
+            font-size: 5vw; font-weight: 900; font-family: "Noto Serif SC", "Ma Shan Zheng", cursive;
+            color: #FFFEF5; text-shadow: 0 6px 18px rgba(0,0,0,0.6), 0 3px 6px rgba(0,0,0,0.8);
+            letter-spacing: 6px; z-index: 2; line-height: 1.3; background: none;
+        }
+        .banner-desc {
+            position: absolute; top: 50%; right: 8%; transform: translateY(-50%);
+            writing-mode: vertical-rl; text-orientation: upright;
+            font-size: 1.8vw; font-family: "Noto Serif SC", "STKaiti", serif;
+            color: #FFFEF5; text-shadow: 0 3px 12px rgba(0,0,0,0.7); letter-spacing: 4px; background: none;
+        }
+        .banner-top-logo .company-name {
+            font-size: 20px; color: #FFFFFF; font-weight: bold;
+            text-shadow: 0 2px 12px rgba(0,0,0,0.9); font-family: "Noto Serif SC", "Ma Shan Zheng", cursive;
+        }
+        @media (max-width:768px){
+            .title { font-size: 28px; white-space: normal; }
+            .banner-text { font-size: 8vw; left: 50%; top: 40%; transform: translate(-50%, -50%); text-align: center; white-space: nowrap; }
+            .banner-desc { right: 50%; transform: translate(50%, -50%); top: 70%; writing-mode: horizontal-tb; font-size: 4vw; line-height: 1.8; }
+            .banner-top-logo .company-name { font-size: 16px; }
+        }
+        /* 其余原有完整样式 */
+        body::before,body::after,.dot-left,.dot-right,.dot-tl,.dot-br{
+            content:""; position:absolute;
+            background-image:url("data:image/svg+xml,%3Csvg width='40' height='60' viewBox='0 0 40 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 5c2-1 4-1 6 0a3 3 0 010 4c-2 1-4 1-6 0a3 3 0 010-4zM10 15c2-1 4-1 6 0a3 3 0 010 4c-2 1-4 1-6 0a3 3 0 010-4zM20 25l-5 10v10l5-5 5 5V35l-5-10z' stroke='%23e0e0e0' stroke-width='1' fill='none/%3E%3C/svg%3E");
+            background-repeat:no-repeat; opacity:.4; z-index:-1;
+        }
+        .dot-tl{top:80px;left:30px;width:40px;height:60px}
+        .dot-br{bottom:100px;right:30px;width:40px;height:60px}
+        .dot-left{top:40%;left:20px;width:30px;height:50px;transform:rotate(-10deg)}
+        .dot-right{top:60%;right:20px;width:30px;height:50px;transform:rotate(10deg)}
+        nav{ background:#8B4513; color:#fff; padding:16px 30px; display:flex; justify-content:center; gap:28px; position:sticky; top:0; z-index:99; flex-wrap:wrap; box-shadow:0 2px 10px rgba(0,0,0,0.05); }
+        nav a{ color:#fff; text-decoration:none; font-size:15px; font-weight:500; letter-spacing:1px; transition:color 0.2s; white-space:nowrap; }
+        nav a:hover{ color:#ffd700; }
+        .section{ max-width:1100px; margin:70px auto; padding:48px 32px; background:#fff; border-radius:24px; box-shadow:0 4px 20px rgba(0,0,0,0.03); }
+        .bg-light{ background:#fdf6f0; }
+        .peanut-banner { width:100%; height:70vh; position:relative; overflow:hidden; margin-bottom:0; }
+        .peanut-bg-img { width:100%; height:100%; object-fit:cover; filter:brightness(0.8); }
+        .banner-top-logo { position:absolute; top:24px; left:28px; display:flex; align-items:center; gap:14px; z-index:3; }
+        .banner-top-logo img { width:70px; height:70px; object-fit:contain; border-radius:8px; }
+        .story-row { display:flex; align-items:center; gap:40px; margin-bottom:40px; flex-wrap:wrap; }
+        .story-text-col { flex:1; min-width:260px; }
+        .story-text-col p { font-size:15px; line-height:1.65; color:#3e2c1e; background:#fffcf5; padding:20px 22px; border-radius:28px; margin:0; }
+        .story-img-col { flex:1; min-width:260px; text-align:center; }
+        .story-img-col img { width:100%; border-radius:24px; box-shadow:0 8px 20px rgba(0,0,0,0.05); object-fit:contain; }
+        .story-video-col { flex:1; min-width:260px; }
+        .story-video-col video { width:100%; height:auto; border-radius:24px; background:#000; }
+        @media (max-width:768px){ .story-row{ flex-direction:column; } .story-row:nth-child(1) .story-img-col{ order:2; } }
+        .product-slider{position:relative;max-width:900px;margin:0 auto;overflow:hidden;padding:0 28px;}
+        .slider-wrapper{display:flex;transition:transform 0.5s cubic-bezier(0.2,0.9,0.4,1.1);}
+        .slide{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;min-width:100%;}
+        .slide-btn{ position:absolute;top:50%;transform:translateY(-50%); width:44px;height:44px; background:#8B4513; color:#fff; border:none; border-radius:50%; font-size:22px; cursor:pointer; z-index:10; }
+        .prev-btn{left:0px;} .next-btn{right:0px;}
+        .pagination{display:flex;justify-content:center;gap:12px;margin:32px 0 12px;}
+        .dot{width:10px;height:10px;border-radius:50%;background:#e0d0c0;cursor:pointer;}
+        .dot.active{background:#8B4513;transform:scale(1.2);}
+        .product-card{ background:#fafafa; border-radius:20px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,.06); transition:transform 0.3s; cursor:pointer; }
+        .product-card:hover{ transform:translateY(-8px); box-shadow:0 20px 28px -12px rgba(0,0,0,0.2); }
+        .product-img{ width:100%; height:180px; background:#f5e5d3; display:flex; align-items:center; justify-content:center; padding:16px; }
+        .product-img img{ width:85%; height:85%; object-fit:contain; }
+        .product-info{ padding:20px 16px 24px; text-align:center; }
+        .product-name{ font-size:16px; font-weight:700; color:#4a2e1a; letter-spacing:1.5px; font-family: "Noto Serif SC", "华文楷书", serif; }
+        .more-btn{ display:block; width:200px; height:48px; line-height:48px; text-align:center; background:#8B4513; color:#fff; font-size:15px; font-weight:bold; border-radius:40px; margin:32px auto 0; text-decoration:none; }
+        .more-btn:hover{ background:#6d3510; color:#ffd700; }
+        .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.55);z-index:999;place-items:center;padding:20px;}
+        .modal-content{background:#fff;width:100%;max-width:400px;padding:32px 24px;border-radius:36px;text-align:center;position:relative;}
+        .close-modal{position:absolute;top:18px;right:24px;font-size:26px;cursor:pointer;color:#a77b4f;}
+        .modal-img{width:160px;height:160px;margin:0 auto 20px;border-radius:24px;background:#fcf5e8;display:flex;align-items:center;justify-content:center;}
+        .modal-img img{width:90%;height:90%;object-fit:contain;}
+        .modal-name{font-size:24px;color:#8B4513;margin-bottom:8px;font-weight:bold;}
+        .modal-price{font-size:28px;color:#e64343;font-weight:bold;margin-bottom:16px;}
+        .modal-desc{font-size:14px;color:#555;margin-bottom:24px;}
+        .num-box{display:flex;align-items:center;justify-content:center;gap:15px;margin-bottom:28px;}
+        .num-btn{width:40px;height:40px;background:#8B4513;color:#fff;font-size:20px;border-radius:30px;border:none;cursor:pointer;}
+        .num-input{width:60px;height:40px;text-align:center;border:1px solid #e0cfbc;border-radius:30px;font-size:16px;}
+        .buy-btn{width:100%;height:48px;background:#8B4513;color:#fff;border:none;border-radius:40px;font-size:16px;font-weight:bold;cursor:pointer;}
+        .exp-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px;margin-top:20px;}
+        .exp-card{background:#fafafa;padding:36px 20px;border-radius:24px;text-align:center;transition:transform 0.25s;cursor:pointer;}
+        .exp-card:hover{transform:translateY(-6px);box-shadow:0 18px 25px -12px rgba(0,0,0,0.12);}
+        .exp-card h3{color:#8B4513;margin-bottom:14px;font-size:20px;}
+        .partner-grid{ display:flex; flex-wrap:wrap; justify-content:center; gap:32px; margin-bottom:50px; }
+        .partner-item{ background:#fffcf5; border-radius:60px; padding:8px 28px; font-size:15px; font-weight:500; color:#5a3a22; border:1px solid #f0e2cf; transition:all 0.2s; font-family:"Noto Serif SC",serif; }
+        .mode-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:24px; margin:30px 0 50px; }
+        .mode-card{ background:#fffcf5; border-radius:24px; padding:28px 18px; text-align:center; transition:all 0.25s; border:1px solid #f0e2cf; }
+        .mode-card:hover{ transform:translateY(-6px); box-shadow:0 12px 24px -12px rgba(0,0,0,0.12); background:#fff; }
+        .mode-icon{ font-size:42px; margin-bottom:16px; }
+        .mode-card h3{ font-size:20px; color:#8B4513; margin-bottom:12px; }
+        .mode-card p{ font-size:14px; color:#5a3a22; }
+        .advantage-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:24px; margin:30px 0 50px; }
+        .advantage-item{ background:#faf6ef; border-radius:20px; padding:20px 16px; text-align:center; }
+        .advantage-item .adv-icon{ font-size:32px; margin-bottom:12px; }
+        .advantage-item h4{ font-size:18px; color:#8B4513; margin-bottom:8px; }
+        .advantage-item p{ font-size:13px; color:#5a3a22; }
+        .contact-area{ display:flex; flex-wrap:wrap; gap:40px; background:#fffcf5; border-radius:32px; padding:32px; margin-top:20px; }
+        .contact-info{ flex:1; min-width:200px; }
+        .contact-info h3{ font-size:20px; color:#8B4513; margin-bottom:16px; font-family:"Noto Serif SC",serif; }
+        .contact-info p{ margin-bottom:12px; font-size:15px; display:flex; align-items:center; gap:8px; }
+        .contact-form{ flex:1.5; min-width:240px; }
+        .contact-form input, .contact-form textarea{ width:100%; padding:12px 16px; border:1px solid #e0cfbc; border-radius:28px; font-family:inherit; font-size:14px; background:#fff; }
+        .contact-form button{ background:#8B4513; color:white; border:none; padding:10px 24px; border-radius:40px; font-size:15px; font-weight:bold; cursor:pointer; }
+        .image-modal{ display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:999999; align-items:center; justify-content:center; cursor:pointer; }
+        .image-modal img{ max-width:90%; max-height:90%; object-fit:contain; border-radius:12px; }
+        .image-modal-close{ position:absolute; top:30px; right:40px; font-size:40px; color:white; cursor:pointer; }
+        footer{ background:#5D4037; color:#fff; padding:36px 24px; max-width:1100px; margin:60px auto 0; border-radius:28px 28px 0 0; }
+        .footer-container{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:28px; text-align:center; }
+        .footer-col h4{ margin-bottom:16px; font-size:18px; color:#ffd799; font-family:"Noto Serif SC",serif; }
+        .fade-up-scroll{ opacity:0; transform:translateY(30px); transition:opacity 0.7s, transform 0.7s; }
+        .fade-up-scroll.visible{ opacity:1; transform:translateY(0); }
+        .fade-img-scroll{ opacity:0; transition:opacity 0.8s; }
+        .fade-img-scroll.visible{ opacity:1; }
+        .sun-spot{ position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:4; overflow:hidden; }
+        .sun-spot::before{ content:""; position:absolute; top:12%; left:8%; width:240px; height:240px; background:radial-gradient(circle, rgba(255,220,130,0.35) 0%, rgba(255,180,70,0) 75%); border-radius:50%; animation:spotFlicker 3.2s infinite alternate; }
+        @keyframes spotFlicker{ 0%{ opacity:0.2; transform:scale(0.92); } 100%{ opacity:0.7; transform:scale(1.08); } }
+        #arScanner{ display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#000; z-index:9999999; }
+        #arCloseBtn{ position:absolute; top:20px; right:20px; width:46px; height:46px; background:#8B4513; color:#fff; font-size:22px; border:none; border-radius:50%; cursor:pointer; }
+        #arVideoCam{ width:100%; height:100%; object-fit:cover; }
+        #ipCardModal{ display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:9999999; align-items:center; justify-content:center; padding:20px; }
+        .ip-card{ background:#fffbf5; width:100%; max-width:680px; padding:35px 30px; border-radius:24px; position:relative; }
+        .ip-close{ position:absolute; top:15px; right:20px; font-size:28px; color:#8B4513; cursor:pointer; }
+        .ip-title{ text-align:center; font-size:26px; color:#8B4513; margin-bottom:20px; font-weight:bold; }
+        .ip-item{ margin-bottom:12px; font-size:16px; color:#3d2b1b; }
+        .ip-item strong{ color:#8B4513; }
+        .ip-bottom{ text-align:center; margin-top:25px; color:#8B4513; font-weight:bold; }
+        .ip-menu-modal{ display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:9999999; align-items:center; justify-content:center; }
+        .ip-menu-box{ background:#fffbf5; width:100%; max-width:400px; padding:40px 30px; border-radius:24px; text-align:center; position:relative; }
+        .ip-menu-close{ position:absolute; top:15px; right:20px; font-size:28px; color:#8B4513; cursor:pointer; }
+        .ip-menu-title{ color:#8B4513; margin-bottom:30px; font-size:22px; }
+        .ip-menu-btn{ display:block; width:100%; padding:14px; border:none; border-radius:12px; background:#8B4513; color:#fff; font-size:16px; cursor:pointer; margin-bottom:16px; }
+        .ip-menu-btn.secondary{ background:#C9A87C; }
+        .ai-float-container{ position:fixed; bottom:32px; right:24px; z-index:1000; text-align:center; cursor:pointer; }
+        .ai-float-btn img{ width:68px; height:68px; border-radius:50%; box-shadow:0 6px 16px rgba(0,0,0,0.2); border:2px solid #ffd966; transition:transform 0.2s; }
+        .ai-name{ font-size:14px; background:#8B4513; color:white; padding:4px 10px; border-radius:20px; margin-top:4px; font-weight:bold; font-family:"Noto Serif SC",serif; }
+        #ai-modal{ display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:100000; align-items:center; justify-content:center; }
+        .ai-modal-box{ width:90%; max-width:460px; height:600px; background:white; border-radius:32px; overflow:hidden; display:flex; flex-direction:column; }
+        .ai-modal-header{ background:#8B4513; color:white; padding:16px; font-weight:bold; font-size:18px; display:flex; justify-content:space-between; font-family:"Noto Serif SC",serif; }
+        .ai-modal-close{ background:none; border:none; color:white; font-size:24px; cursor:pointer; }
+        .ai-modal-body{ flex:1; width:100%; border:none; }
+        @media (max-width:900px){ .mode-grid{ grid-template-columns:repeat(2,1fr); } .slide{ grid-template-columns:repeat(2,1fr); } }
+        @media (max-width:600px){ .mode-grid{ grid-template-columns:1fr; } .exp-grid{ grid-template-columns:1fr; } }
+    </style>
+</head>
+<body>
+<div class="dot-tl"></div><div class="dot-br"></div><div class="dot-left"></div><div class="dot-right"></div>
+<nav><a href="#banner">首页</a><a href="#story">品牌故事</a><a href="#product">产品简介</a><a href="#experience">智慧体验</a><a href="products.html">购物中心</a><a href="cart.html">购物车</a></nav>
+
+<div class="peanut-banner" id="banner">
+    <div class="banner-top-logo"><img src="商标.png" alt="商标"><div class="company-name">汴祥生有限责任公司</div></div>
+    <img src="首页花生图片.jpg" class="peanut-bg-img" alt="祥符花生">
+    <div class="banner-text">一粒祥符花生<br>千年宋韵留香</div>
+    <div class="banner-desc">祥符花生<br>国家地理标志<br>黄河沙壤种植<br>宋韵非遗融合<br>长生果吉祥文化</div>
+    <div class="sun-spot"></div>
+</div>
+
+<section id="story" class="section bg-light"><div class="title">品牌故事</div><div class="story-row"><div class="story-text-col fade-up-scroll"><p>黄河奔流不息，孕育了开封祥符这片温润沃土。四百余年花生耕植历史，得天独厚的沙质土壤与气候条件，造就了祥符花生皮薄饱满、色泽鲜亮、醇香浓郁的天然品质。凭借稳定出众的风味与绿色生态的种植优势，祥符花生先后荣获国家农产品地理标志、全国绿色食品原料标准化生产基地认证，成为中原地区极具代表性的特色农产品。</p><p>我们深挖本土文化底蕴，将朱仙镇木版年画的非遗美学、门神守护的吉祥意象，与岳飞忠勇护国的精神内涵相融，打造 “祥祥”“福福” 双生 IP 形象，让一颗小小的花生，从普通农产品升级为承载文化、传递祝福、连接情感的时代新符号。</p></div><div class="story-img-col fade-img-scroll"><img src="福福祥祥.png" alt="祥符花生品牌故事"></div></div><div class="story-row"><div class="story-video-col fade-img-scroll"><video controls controlsList="nodownload"><source src="品牌视频.mp4" type="video/mp4">您的浏览器不支持视频播放</video></div><div class="story-text-col fade-up-scroll"><p>以数智化赋能产业，以文创化提升价值，祥符花生告别单一原料销售模式，构建品牌运营、文创开发、全渠道营销、农文旅融合完整生态。我们坚持联农带农，让产业增值惠及田间农户；坚持文化创新，让非遗技艺在当代生活中活态传承；坚持品质为本，让每一份产品都带着土地的诚意与时代的新意。</p><p>从黄河岸边的原生风物，到走向全国的文化品牌；从传统农耕的质朴果实，到兼具颜值与内涵的文创潮品，祥符花生以文化为根，以匠心为魂，让千年宋韵，在一粒花生中永续留香。</p></div></div></section>
+
+<section id="product" class="section"><div class="title">产品简介</div><div class="product-slider"><button class="slide-btn prev-btn" onclick="slidePrev()">‹</button><div class="slider-wrapper" id="sliderWrapper"><div class="slide"><div class="product-card" onclick="openModal('汴印祥符钥匙扣','¥39','汴印祥符钥匙扣.png','融合朱仙镇木版年画非遗元素，文化标志性文创。')"><div class="product-img"><img src="汴印祥符钥匙扣.png" alt="汴印祥符钥匙扣"></div><div class="product-info"><div class="product-name">汴印祥符钥匙扣</div></div></div><div class="product-card" onclick="openModal('晶藏福果钥匙扣','¥45','晶藏福果钥匙扣.png','真实祥符花生+高透水晶封装，萌趣IP搭配。')"><div class="product-img"><img src="晶藏福果钥匙扣.png" alt="晶藏福果钥匙扣"></div><div class="product-info"><div class="product-name">晶藏福果钥匙扣</div></div></div><div class="product-card" onclick="openModal('祥福萌贴','¥25','祥福萌贴.png','祥祥福福表情包贴纸，适合手账手机装饰。')"><div class="product-img"><img src="祥福萌贴.png" alt="祥福萌贴"></div><div class="product-info"><div class="product-name">祥福萌贴</div></div></div><div class="product-card" onclick="openModal('宋韵花生绣贴','¥32','宋韵花生绣贴.png','立体刺绣工艺，花生形象生动饱满。')"><div class="product-img"><img src="宋韵花生绣贴.png" alt="宋韵花生绣贴"></div><div class="product-info"><div class="product-name">宋韵花生绣贴</div></div></div><div class="product-card" onclick="openModal('书香福粒书签','¥29','书香福粒书签.png','透明亚克力书签，寓意“好事花生”。')"><div class="product-img"><img src="书香福粒书签.png" alt="书香福粒书签"></div><div class="product-info"><div class="product-name">书香福粒书签</div></div></div><div class="product-card" onclick="openModal('汴绣祥缘手绳','¥58','汴绣祥缘手绳.png','国风手工编织手绳，花生IP主饰。')"><div class="product-img"><img src="汴绣祥缘手绳.png" alt="汴绣祥缘手绳"></div><div class="product-info"><div class="product-name">汴绣祥缘手绳</div></div></div></div><div class="slide"><div class="product-card" onclick="openModal('长生小伴毛绒玩具','¥69','长生小伴毛绒玩具.png','花生造型毛绒公仔，柔软亲肤。')"><div class="product-img"><img src="长生小伴毛绒玩具.png" alt="长生小伴毛绒玩具"></div><div class="product-info"><div class="product-name">长生小伴毛绒玩具</div></div></div><div class="product-card" onclick="openModal('如意贴毛绒挂件','¥19','如意贴毛绒挂件.png','迷你花生毛绒挂件，内置磁铁可贴合。')"><div class="product-img"><img src="如意贴毛绒挂件.png" alt="如意贴毛绒挂件"></div><div class="product-info"><div class="product-name">如意贴毛绒挂件</div></div></div><div class="product-card" onclick="openModal('祥伴福缘磁吸钥匙扣','¥49','祥伴福缘磁吸钥匙扣.png','CP组合磁吸设计，可分可合。')"><div class="product-img"><img src="祥伴福缘磁吸钥匙扣.png" alt="祥伴福缘磁吸钥匙扣"></div><div class="product-info"><div class="product-name">祥伴福缘磁吸钥匙扣</div></div></div><div class="product-card" onclick="openModal('汴城游忆冰箱贴','¥52','汴城游忆冰箱贴.png','融合开封地标与花生IP，立体造型。')"><div class="product-img"><img src="汴城游忆冰箱贴.png" alt="汴城游忆冰箱贴"></div><div class="product-info"><div class="product-name">汴城游忆冰箱贴</div></div></div><div class="product-card" onclick="openModal('落花生香香薰蜡牌','¥35','落花生香香薰蜡牌.png','天然大豆蜡，花生造型菊花香调。')"><div class="product-img"><img src="落花生香香薰蜡牌.png" alt="落花生香香薰蜡牌"></div><div class="product-info"><div class="product-name">落花生香香薰蜡牌</div></div></div><div class="product-card" onclick="openModal('祥瑞福气伴手礼盒','¥68','祥瑞福气伴手礼盒.png','高油酸花生、花生酥与文创小物。')"><div class="product-img"><img src="祥瑞福气伴手礼盒.png" alt="祥瑞福气伴手礼盒"></div><div class="product-info"><div class="product-name">祥瑞福气伴手礼盒</div></div></div></div></div><button class="slide-btn next-btn" onclick="slideNext()">›</button></div><div class="pagination"><div class="dot active" onclick="goToSlide(0)"></div><div class="dot" onclick="goToSlide(1)"></div></div><a href="products.html" class="more-btn">更多产品</a></section>
+
+<div class="modal" id="buyModal"><div class="modal-content"><span class="close-modal" onclick="closeModal()">×</span><div class="modal-img"><img src="默认产品.png" alt="产品" id="modalImg"></div><div class="modal-name" id="modalName">产品名称</div><div class="modal-price" id="modalPrice">¥0</div><div class="modal-desc" id="modalDesc">产品介绍</div><div class="num-box"><button class="num-btn" onclick="changeNum(-1)">-</button><input type="number" class="num-input" id="modalNum" value="1" min="1" readonly><button class="num-btn" onclick="changeNum(1)">+</button></div><button class="buy-btn" onclick="addCartFromModal()">加入购物车</button></div></div>
+
+<section id="experience" class="section bg-light"><div class="title">智慧体验</div><div class="exp-grid"><div class="exp-card fade-up-scroll" onclick="openARScanner()"><h3>📱 AR扫码互动</h3><p>体验花生AR互动</p></div><div class="exp-card fade-up-scroll" onclick="openIpMenuModal()"><h3>🎨 IP趣味互动</h3><p>趣味小问答 · 萌趣资源馆</p></div></div></section>
+
+<div id="arScanner"><button id="arCloseBtn" onclick="closeARScanner()">×</button><video id="arVideoCam" autoplay playsinline></video></div>
+<div id="ipCardModal"><div class="ip-card"><span class="ip-close" onclick="closeIpCard()">×</span><div class="ip-title">祥祥 & 福福 · IP形象介绍</div><div class="ip-item"><strong>身份：</strong>祥符花生双生守护精灵</div><div class="ip-item"><strong>设计来源：</strong>以开封祥符花生为原型，融合朱仙镇木版年画非遗美学与岳飞忠勇精神打造。</div><div class="ip-item"><strong>祥祥（左·儒雅文精灵）：</strong><br>温文尔雅、书卷气质，代表智慧、文脉、传承，寓意吉祥顺遂、金榜题名。</div><div class="ip-item"><strong>福福（右·英武汉精灵）：</strong><br>刚毅正气、活泼勇敢，代表守护、丰收、福气，寓意平安喜乐、好事发生。</div><div class="ip-bottom">一粒祥符花生，千年宋韵留香</div></div></div>
+<div class="ip-menu-modal" id="ipMenuModal"><div class="ip-menu-box"><span class="ip-menu-close" onclick="closeIpMenuModal()">×</span><h3 class="ip-menu-title">IP萌趣互动中心</h3><button class="ip-menu-btn" onclick="goQuiz()">🧩 祥福趣味小问答</button><button class="ip-menu-btn secondary" onclick="goResource()">📁 IP萌趣资源馆</button></div></div>
+
+<!-- 合作与渠道完整内容（四大合作模式 + 核心优势 + 合作咨询） -->
+<section id="cooperate" class="section">
+    <div class="title">合作与渠道</div>
+    <div><h3 style="font-size:20px; color:#8B4513; margin-bottom:20px; text-align:center;">官方合作伙伴</h3><div class="partner-grid"><div class="partner-item">🌾 祥符区花生发展中心</div><div class="partner-item">🎨 朱仙镇年画非遗工坊</div><div class="partner-item">🏯 开封文旅集团</div><div class="partner-item">🌱 本地龙头企业</div></div></div>
+    <div style="margin:40px 0 30px;"><h3 style="font-size:20px; color:#8B4513; margin-bottom:20px; text-align:center;">📜 官方资质与认可</h3><div style="display:flex; flex-wrap:wrap; justify-content:center; gap:30px;"><div style="background:#fffcf5; border-radius:20px; padding:16px; width:220px; text-align:center; cursor:pointer;" onclick="openImageModal('作品登记书.jpg')"><div style="background:#f5e5d3; border-radius:16px; padding:20px;"><img src="作品登记书.jpg" alt="作品登记书" style="max-width:100%; border-radius:8px;"></div><div style="font-weight:600; color:#8B4513;">作品登记证书</div><div style="font-size:12px;">国家版权局登记</div></div><div style="background:#fffcf5; border-radius:20px; padding:16px; width:300px; text-align:center;"><div style="display:flex; gap:12px; margin-bottom:12px;"><div style="background:#f5e5d3; border-radius:16px; padding:12px; flex:1; cursor:pointer;" onclick="openImageModal('投资协议书1.jpg')"><img src="投资协议书1.jpg" alt="投资协议1" style="width:100%; border-radius:8px;"></div><div style="background:#f5e5d3; border-radius:16px; padding:12px; flex:1; cursor:pointer;" onclick="openImageModal('投资协议书2.jpg')"><img src="投资协议书2.jpg" alt="投资协议2" style="width:100%; border-radius:8px;"></div></div><div style="font-weight:600; color:#8B4513;">战略投资协议</div><div style="font-size:12px;">产业资本合作 · 签约实拍</div></div><div style="background:#fffcf5; border-radius:20px; padding:16px; width:220px; text-align:center; cursor:pointer;" onclick="openImageModal('调研认可.jpg')"><div style="background:#f5e5d3; border-radius:16px; padding:20px;"><img src="调研认可.jpg" alt="调研认可" style="max-width:100%; border-radius:8px;"></div><div style="font-weight:600; color:#8B4513;">调研认可</div><div style="font-size:12px;">政府重点扶持项目</div></div></div></div>
+    
+    <!-- 四大合作模式 -->
+    <div><h3 style="font-size:20px; color:#8B4513; margin:30px 0 20px; text-align:center;">🤝 四大合作模式</h3><div class="mode-grid"><div class="mode-card"><div class="mode-icon">🏪</div><h3>品牌授权</h3><p>开放IP授权、联名产品开发，共享品牌势能</p></div><div class="mode-card"><div class="mode-icon">🌾</div><h3>基地直采</h3><p>源头祥符花生稳定供应，品质全程可溯</p></div><div class="mode-card"><div class="mode-icon">🎁</div><h3>文创定制</h3><p>企业伴手礼、节日礼盒专属设计定制</p></div><div class="mode-card"><div class="mode-icon">🏛️</div><h3>文旅融合</h3><p>景区联名、研学体验、非遗工坊合作</p></div></div></div>
+    
+    <!-- 核心优势 -->
+    <div><h3 style="font-size:20px; color:#8B4513; margin:30px 0 20px; text-align:center;">✨ 我们的核心优势</h3><div class="advantage-grid"><div class="advantage-item"><div class="adv-icon">📍</div><h4>地理标志</h4><p>国家农产品地理标志，原产地认证</p></div><div class="advantage-item"><div class="adv-icon">🎨</div><h4>非遗IP</h4><p>朱仙镇年画+岳飞文化，独特双IP</p></div><div class="advantage-item"><div class="adv-icon">🔬</div><h4>数智赋能</h4><p>智慧农业+区块链溯源，品质保障</p></div><div class="advantage-item"><div class="adv-icon">🌱</div><h4>联农带农</h4><p>助力乡村振兴，产业价值共享</p></div></div></div>
+    
+    <!-- 合作咨询表单 -->
+    <div><h3 style="font-size:20px; color:#8B4513; margin:30px 0 20px; text-align:center;">📞 合作咨询</h3><div class="contact-area"><div class="contact-info"><h3>汴祥生·商务中心</h3><p>📞 19149261386</p><p>📧 hezuo@bxsong.com</p><p>📍 中国·开封祥符区花生文化产业园</p></div><div class="contact-form"><div class="form-group"><input type="text" placeholder="您的姓名" id="contactName"></div><div class="form-group"><input type="text" placeholder="联系电话/微信" id="contactPhone"></div><div class="form-group"><textarea rows="3" placeholder="合作意向或留言" id="contactMsg"></textarea></div><button onclick="submitContact()">提交合作意向</button></div></div></div>
+</section>
+
+<footer><div class="footer-container"><div class="footer-col"><h4>联系方式</h4><p>电话：19149261386</p><p>邮箱：hezuo@bxsong.com</p></div><div class="footer-col"><h4>关注我们</h4><p>微信公众号：汴祥生</p></div><div class="footer-col"><h4>服务时间</h4><p>周一至周日 9:00~18:00</p><p>节假日正常营业</p></div></div></footer>
+
+<div class="ai-float-container"><div class="ai-float-btn" onclick="openAiModal()"><img src="福福祥祥.png" alt="祥祥福福"></div><div class="ai-name">祥祥 & 福福</div></div>
+<div id="ai-modal"><div class="ai-modal-box"><div class="ai-modal-header">祥祥福福智能助手<button class="ai-modal-close" onclick="closeAiModal()">×</button></div><iframe class="ai-modal-body" id="ai-iframe" src=""></iframe></div></div>
+<div id="imageModal" class="image-modal" onclick="closeImageModal()"><span class="image-modal-close">&times;</span><img id="modalImage" src=""></div>
+
+<script>
+    function openAiModal(){ document.getElementById('ai-modal').style.display='flex'; document.getElementById('ai-iframe').src="https://www.coze.cn/s/MyH0E-0Bz7I/"; }
+    function closeAiModal(){ document.getElementById('ai-modal').style.display='none'; document.getElementById('ai-iframe').src=""; }
+    let arVideoCam, arStream;
+    function openARScanner(){ document.getElementById('arScanner').style.display='block'; arVideoCam=document.getElementById('arVideoCam'); navigator.mediaDevices.getUserMedia({ video:{ facingMode:'environment' } }).then(stream=>{ arStream=stream; arVideoCam.srcObject=stream; }).catch(()=>alert("请开启摄像头权限")); }
+    function closeARScanner(){ if(arStream) arStream.getTracks().forEach(track=>track.stop()); document.getElementById('arScanner').style.display='none'; }
+    function closeIpCard(){ document.getElementById('ipCardModal').style.display='none'; }
+    function openIpMenuModal(){ document.getElementById('ipMenuModal').style.display='flex'; }
+    function closeIpMenuModal(){ document.getElementById('ipMenuModal').style.display='none'; }
+    function goQuiz(){ closeIpMenuModal(); window.open('quiz.html','_blank'); }
+    function goResource(){ closeIpMenuModal(); window.open('resource.html','_blank'); }
+    function openImageModal(imgSrc){ document.getElementById('imageModal').style.display='flex'; document.getElementById('modalImage').src=imgSrc; }
+    function closeImageModal(){ document.getElementById('imageModal').style.display='none'; }
+    let slideIndex=0; const totalSlides=document.querySelectorAll('.slide').length;
+    function slidePrev(){ slideIndex=(slideIndex-1+totalSlides)%totalSlides; updateSlider(); }
+    function slideNext(){ slideIndex=(slideIndex+1)%totalSlides; updateSlider(); }
+    function goToSlide(index){ slideIndex=index; updateSlider(); }
+    function updateSlider(){ document.getElementById('sliderWrapper').style.transform=`translateX(-${slideIndex*100}%)`; document.querySelectorAll('.dot').forEach((dot,i)=>dot.classList.toggle('active',i===slideIndex)); }
+    let currentModalProduct={};
+    function openModal(name,price,imgUrl,desc){ currentModalProduct={name,price,img:imgUrl}; document.getElementById('modalName').innerText=name; document.getElementById('modalPrice').innerText=price; document.getElementById('modalDesc').innerText=desc; document.getElementById('modalNum').value=1; if(imgUrl) document.getElementById('modalImg').src=imgUrl; document.getElementById('buyModal').style.display='grid'; }
+    function closeModal(){ document.getElementById('buyModal').style.display='none'; }
+    function changeNum(delta){ let val=parseInt(document.getElementById('modalNum').value)+delta; if(val>=1) document.getElementById('modalNum').value=val; }
+    window.onclick=function(e){ if(e.target===document.getElementById('buyModal')) closeModal(); if(e.target===document.getElementById('ipMenuModal')) closeIpMenuModal(); }
+    function addCartFromModal(){ let cart=JSON.parse(localStorage.getItem('cart'))||[]; let existing=cart.find(item=>item.name===currentModalProduct.name); if(existing) existing.num+=1; else cart.push({...currentModalProduct,num:1}); localStorage.setItem('cart',JSON.stringify(cart)); alert('加入购物车成功！'); closeModal(); }
+    function submitContact(){ let name=document.getElementById('contactName').value; if(!name){ alert('请填写姓名'); return; } alert('感谢您的合作意向，我们会尽快联系您！'); document.getElementById('contactName').value=''; document.getElementById('contactPhone').value=''; document.getElementById('contactMsg').value=''; }
+    const fadeElements=document.querySelectorAll('.fade-up-scroll, .fade-img-scroll');
+    const observer=new IntersectionObserver((entries)=>{ entries.forEach(entry=>{ if(entry.isIntersecting){ entry.target.classList.add('visible'); observer.unobserve(entry.target); } }); },{ threshold:0.15 });
+    fadeElements.forEach(el=>observer.observe(el));
+    window.addEventListener('load',()=>{ fadeElements.forEach(el=>{ if(el.getBoundingClientRect().top<window.innerHeight-60){ el.classList.add('visible'); observer.unobserve(el); } }); });
+    document.querySelectorAll('nav a').forEach(anchor=>{ anchor.addEventListener('click',function(e){ let href=this.getAttribute('href'); if(href.startsWith('#')){ e.preventDefault(); let target=document.querySelector(href); if(target) window.scrollTo({top:target.offsetTop-80,behavior:'smooth'}); } }); });
+</script>
+</body>
+</html>

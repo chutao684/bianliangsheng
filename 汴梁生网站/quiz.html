@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>祥福趣味小问答 - 汴祥生</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #fffbf5;
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 60px auto;
+            background: #fff;
+            padding: 45px 35px;
+            border-radius: 24px;
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        .title {
+            text-align: center;
+            color: #8B4513;
+            font-size: 28px;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        .progress {
+            text-align: center;
+            color: #8B4513;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .question {
+            font-size: 19px;
+            color: #333;
+            margin-bottom: 22px;
+            line-height: 1.6;
+            font-weight: bold;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .option {
+            padding: 15px 20px;
+            background: #f8f0e7;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .option:hover {
+            border-color: #8B4513;
+        }
+
+        .option.selected {
+            background: #8B4513;
+            color: #fff;
+        }
+
+        .submit-btn {
+            margin-top: 30px;
+            width: 100%;
+            padding: 15px;
+            background: #8B4513;
+            color: #fff;
+            border: none;
+            border-radius: 14px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 25px;
+            color: #8B4513;
+            text-decoration: none;
+            font-size: 15px;
+        }
+
+        /* 弹窗解析 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 999;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-box {
+            background: #fff;
+            max-width: 500px;
+            padding: 35px 30px;
+            border-radius: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            color: #8B4513;
+            cursor: pointer;
+        }
+
+        .modal-ans {
+            color: #8B4513;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .modal-desc {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .modal-praise {
+            color: #8B4513;
+            font-size: 17px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .next-btn {
+            margin-top: 25px;
+            padding: 12px 25px;
+            background: #8B4513;
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+
+        /* 最终结果页 */
+        .result-page {
+            display: none;
+        }
+
+        .result-score {
+            text-align: center;
+            font-size: 24px;
+            color: #8B4513;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        .result-final-praise {
+            text-align: center;
+            font-size: 18px;
+            color: #8B4513;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        .review-item {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .review-q {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .review-my {
+            color: #666;
+        }
+
+        .review-true {
+            color: #8B4513;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" id="quizPage">
+        <h2 class="title">🧩 祥福趣味小问答</h2>
+        <div class="progress" id="progress">第 1 题 / 共 5 题</div>
+        <div class="question" id="question"></div>
+        <div class="options" id="options"></div>
+        <button class="submit-btn" onclick="submitAnswer()">提交答案</button>
+        <a href="index.html" class="back">← 返回首页</a>
+    </div>
+
+    <!-- 单题解析弹窗 -->
+    <div class="modal" id="ansModal">
+        <div class="modal-box">
+            <span class="modal-close" onclick="closeModal()">×</span>
+            <div class="modal-ans" id="modalAns"></div>
+            <div class="modal-desc" id="modalDesc"></div>
+            <div class="modal-praise" id="modalPraise"></div>
+            <button class="next-btn" onclick="nextQuestion()">下一题</button>
+        </div>
+    </div>
+
+    <!-- 最终结果页 -->
+    <div class="container result-page" id="resultPage">
+        <h2 class="title">🎊 答题完成！</h2>
+        <div class="result-score" id="totalScore"></div>
+        <div class="result-final-praise" id="finalPraise"></div>
+        <div id="reviewList"></div>
+        <a href="index.html" class="back">← 返回首页</a>
+    </div>
+
+    <script>
+        // 题库（5题 全单选 带答案+解析）
+        const questions = [
+            {
+                q: "祥祥 & 福福的原型是什么？",
+                opt: ["A 花生精灵", "B 小鸟", "C 小猫"],
+                ans: 0,
+                ansText: "A 花生精灵",
+                desc: "祥祥福福是以开封祥符花生为原型设计的IP形象。"
+            },
+            {
+                q: "祥符花生是哪里的国家地理标志产品？",
+                opt: ["A 洛阳", "B 开封祥符", "C 郑州"],
+                ans: 1,
+                ansText: "B 开封祥符",
+                desc: "祥符花生是河南省开封市祥符区特产。"
+            },
+            {
+                q: "IP形象融合了哪种非遗文化？",
+                opt: ["A 朱仙镇木版年画", "B 剪纸", "C 皮影"],
+                ans: 0,
+                ansText: "A 朱仙镇木版年画",
+                desc: "设计融入了朱仙镇木版年画的色彩与门神文化。"
+            },
+            {
+                q: "祥祥代表的含义是？",
+                opt: ["A 智慧吉祥", "B 勇敢守护", "C 财富丰收"],
+                ans: 0,
+                ansText: "A 智慧吉祥",
+                desc: "祥祥是儒雅文精灵，代表智慧、文脉、吉祥。"
+            },
+            {
+                q: "福福代表的含义是？",
+                opt: ["A 平安福气", "B 文艺气质", "C 金榜题名"],
+                ans: 0,
+                ansText: "A 平安福气",
+                desc: "福福是英武汉精灵，代表福气、守护、平安喜乐。"
+            }
+        ];
+
+        let current = 0;
+        let score = 0;
+        let userAnswers = [];
+
+        // 加载题目
+        function loadQuestion() {
+            const q = questions[current];
+            document.getElementById("progress").innerText = `第 ${current+1} 题 / 共 ${questions.length} 题`;
+            document.getElementById("question").innerText = q.q;
+            const optBox = document.getElementById("options");
+            optBox.innerHTML = "";
+
+            q.opt.forEach((item, i) => {
+                const div = document.createElement("div");
+                div.className = "option";
+                div.innerText = item;
+                div.onclick = () => {
+                    document.querySelectorAll(".option").forEach(o => o.classList.remove("selected"));
+                    div.classList.add("selected");
+                    div.dataset.index = i;
+                };
+                optBox.appendChild(div);
+            });
+        }
+
+        // 提交答案
+        function submitAnswer() {
+            const selected = document.querySelector(".option.selected");
+            if (!selected) {
+                alert("请选择一个答案");
+                return;
+            }
+
+            const userAns = parseInt(selected.dataset.index);
+            const correct = questions[current].ans;
+            userAnswers.push({
+                q: questions[current].q,
+                user: questions[current].opt[userAns],
+                trueAns: questions[current].ansText
+            });
+
+            if (userAns === correct) score++;
+
+            // 显示解析弹窗
+            showAnswerModal(userAns === correct);
+        }
+
+        // 显示解析
+        function showAnswerModal(isCorrect) {
+            const q = questions[current];
+            document.getElementById("modalAns").innerText = "正确答案：" + q.ansText;
+            document.getElementById("modalDesc").innerText = q.desc;
+            document.getElementById("modalPraise").innerText = isCorrect ? "✅ 太棒啦！继续加油～" : "💡 没关系，多了解就会啦！";
+            document.getElementById("ansModal").style.display = "flex";
+        }
+
+        // 关闭弹窗
+        function closeModal() {
+            document.getElementById("ansModal").style.display = "none";
+        }
+
+        // 下一题 / 结束
+        function nextQuestion() {
+            closeModal();
+            current++;
+            if (current < questions.length) {
+                loadQuestion();
+            } else {
+                showFinalResult();
+            }
+        }
+
+        // 最终结果
+        function showFinalResult() {
+            document.getElementById("quizPage").style.display = "none";
+            document.getElementById("resultPage").style.display = "block";
+            document.getElementById("totalScore").innerText = `最终得分：${score} / ${questions.length}`;
+
+            let praise = "";
+            if (score === 5) praise = "🎉 满分！你是祥福IP小专家！";
+            else if (score >= 3) praise = "👍 很棒！继续了解会更厉害！";
+            else praise = "😊 多学习一下，下次一定更棒！";
+            document.getElementById("finalPraise").innerText = praise;
+
+            const list = document.getElementById("reviewList");
+            userAnswers.forEach(item => {
+                const div = document.createElement("div");
+                div.className = "review-item";
+                div.innerHTML = `
+                    <div class="review-q">${item.q}</div>
+                    <div class="review-my">你的答案：${item.user}</div>
+                    <div class="review-true">正确答案：${item.trueAns}</div>
+                `;
+                list.appendChild(div);
+            });
+        }
+
+        // 初始化
+        window.onload = loadQuestion;
+    </script>
+</body>
+</html>

@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>购物中心 - 汴祥生</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{
+            background:#fffbf5;
+            color:#333;
+            font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+            line-height: 1.6;
+        }
+        nav{
+            background:#8B4513;
+            color:#fff;
+            padding:16px 30px;
+            display:flex;
+            justify-content:center;
+            gap:35px;
+            position:sticky;
+            top:0;
+            z-index:99;
+            box-shadow:0 2px 10px rgba(0,0,0,0.05);
+        }
+        nav a{
+            color:#fff;
+            text-decoration:none;
+            font-size:16px;
+            font-weight:500;
+            letter-spacing:1px;
+            transition:color 0.2s;
+        }
+        nav a:hover{ color:#ffd700; }
+        
+        .container{
+            max-width:1100px;
+            margin:50px auto;
+            padding:0 20px;
+        }
+        .page-title{
+            font-size:30px;
+            color:#8B4513;
+            text-align:center;
+            margin-bottom:40px;
+            font-weight:bold;
+            font-family: "STKaiti", "KaiTi", "SimSun", "华文行书", cursive;
+            letter-spacing:3px;
+            position:relative;
+            display:inline-block;
+            left:50%;
+            transform:translateX(-50%);
+            white-space:nowrap;
+            padding-bottom:10px;
+        }
+        .page-title::after{
+            content:"";
+            position:absolute;
+            bottom:0;
+            left:20%;
+            width:60%;
+            height:2px;
+            background:#C9A87C;
+            border-radius:2px;
+        }
+        @media (max-width:640px){
+            .page-title{ font-size:26px; white-space:normal; }
+        }
+        
+        .cat-box{
+            margin-bottom:50px;
+        }
+        .cat-title{
+            font-size:22px;
+            color:#8B4513;
+            margin-bottom:28px;
+            border-left:5px solid #ffd700;
+            padding-left:14px;
+            font-weight:bold;
+            letter-spacing:1px;
+        }
+        .product-grid{
+            display:grid;
+            grid-template-columns:repeat(3,1fr);
+            gap:28px;
+        }
+        .product-card{
+            position:relative;
+            background:#fff;
+            border-radius:20px;
+            overflow:hidden;
+            box-shadow:0 4px 12px rgba(0,0,0,.04);
+            transition:transform 0.25s ease, box-shadow 0.3s ease;
+            cursor:pointer;
+        }
+        .product-card:hover{
+            transform:translateY(-6px);
+            box-shadow:0 20px 28px -12px rgba(0,0,0,0.12);
+        }
+        .gift-tag{
+            position:absolute;
+            top:12px;
+            left:12px;
+            background:#ffd700;
+            color:#8B4513;
+            padding:4px 12px;
+            border-radius:30px;
+            font-size:12px;
+            font-weight:bold;
+            z-index:2;
+        }
+        .product-img{
+            width:100%;
+            height:200px;
+            background:#fcf5e8;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            padding:16px;
+        }
+        .product-img img{
+            width:85%;
+            height:85%;
+            object-fit:contain;
+            transition:transform 0.3s;
+        }
+        .product-card:hover .product-img img{
+            transform:scale(1.02);
+        }
+        .product-info{
+            padding:20px 16px 24px;
+            text-align:center;
+        }
+        .product-name{
+            font-weight:600;
+            font-size:16px;
+            margin-bottom:10px;
+            color:#4a2e1a;
+            min-height:44px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            letter-spacing:0.5px;
+            line-height:1.4;
+        }
+        .product-price{
+            font-size:20px;
+            color:#e64343;
+            font-weight:bold;
+            margin-bottom:18px;
+        }
+        .buy-btn{
+            display:inline-block;
+            padding:10px 24px;
+            background:#8B4513;
+            color:#fff;
+            border-radius:40px;
+            text-decoration:none;
+            font-weight:bold;
+            font-size:14px;
+            transition:background 0.2s, transform 0.1s;
+        }
+        .buy-btn:hover{
+            background:#6d3510;
+            transform:translateY(-1px);
+        }
+        .back-btn{
+            display:block;
+            width:180px;
+            height:46px;
+            line-height:46px;
+            text-align:center;
+            background:#8B4513;
+            color:#fff;
+            border-radius:40px;
+            margin:50px auto 20px;
+            text-decoration:none;
+            font-weight:bold;
+            transition:0.2s;
+        }
+        .back-btn:hover{
+            background:#6d3510;
+            transform:translateY(-2px);
+        }
+        
+        .modal{
+            display:none;
+            position:fixed;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            background:rgba(0,0,0,.55);
+            z-index:999;
+            place-items:center;
+            padding:20px;
+        }
+        .modal-content{
+            background:#fff;
+            width:100%;
+            max-width:400px;
+            padding:32px 24px;
+            border-radius:36px;
+            text-align:center;
+            position:relative;
+            box-shadow:0 20px 35px -12px rgba(0,0,0,0.2);
+        }
+        .close-modal{
+            position:absolute;
+            top:18px;
+            right:24px;
+            font-size:26px;
+            cursor:pointer;
+            color:#a77b4f;
+        }
+        .modal-img{
+            width:160px;
+            height:160px;
+            margin:0 auto 20px;
+            border-radius:24px;
+            background:#fcf5e8;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+        }
+        .modal-img img{
+            width:90%;
+            height:90%;
+            object-fit:contain;
+        }
+        .modal-name{
+            font-size:24px;
+            color:#8B4513;
+            margin-bottom:8px;
+            font-weight:bold;
+        }
+        .modal-price{
+            font-size:28px;
+            color:#e64343;
+            font-weight:bold;
+            margin-bottom:16px;
+        }
+        .modal-desc{
+            font-size:14px;
+            line-height:1.6;
+            color:#555;
+            margin-bottom:24px;
+            padding:0 8px;
+        }
+        .num-box{
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            gap:15px;
+            margin-bottom:28px;
+        }
+        .num-btn{
+            width:40px;
+            height:40px;
+            border:none;
+            background:#8B4513;
+            color:#fff;
+            font-size:20px;
+            border-radius:30px;
+            cursor:pointer;
+            transition:0.1s;
+        }
+        .num-btn:hover{
+            background:#6d3510;
+        }
+        .num-input{
+            width:60px;
+            height:40px;
+            text-align:center;
+            border:1px solid #e0cfbc;
+            border-radius:30px;
+            font-size:16px;
+        }
+        .buy-btn-modal{
+            width:100%;
+            height:48px;
+            background:#8B4513;
+            color:#fff;
+            border:none;
+            border-radius:40px;
+            font-size:16px;
+            font-weight:bold;
+            cursor:pointer;
+            transition:0.2s;
+        }
+        .buy-btn-modal:hover{
+            background:#6d3510;
+        }
+        
+        @media (max-width:768px){
+            .product-grid{
+                grid-template-columns:repeat(2,1fr);
+                gap:20px;
+            }
+            .container{
+                margin:30px auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html#home">首页</a>
+        <a href="products.html">购物中心</a>
+        <a href="cart.html">购物车</a>
+    </nav>
+
+    <div class="container">
+        <div class="page-title">购物中心</div>
+
+        <!-- 文创商品 -->
+        <div class="cat-box">
+            <div class="cat-title">📦 文创商品</div>
+            <div class="product-grid">
+                <div class="product-card" onclick="openModal('汴印祥符钥匙扣','¥39','汴印祥符钥匙扣.png','融合朱仙镇木版年画非遗元素，色彩浓烈、纹样吉祥，兼具文化价值与实用性。')">
+                    <div class="product-img"><img src="汴印祥符钥匙扣.png" alt="汴印祥符钥匙扣"></div>
+                    <div class="product-info">
+                        <div class="product-name">汴印祥符钥匙扣</div>
+                        <div class="product-price">¥39</div>
+                        <div class="buy-btn">立即购买</div>
+                    </div>
+                </div>
+                <div class="product-card" onclick="openModal('晶藏福果钥匙扣','¥45','晶藏福果钥匙扣.png','真实花生+水晶封装，萌趣IP，文化纪念挂件。')">
+                    <div class="product-img"><img src="晶藏福果钥匙扣.png" alt="晶藏福果钥匙扣"></div>
+                    <div class="product-info">
+                        <div class="product-name">晶藏福果钥匙扣</div>
+                        <div class="product-price">¥45</div>
+                        <div class="buy-btn">立即购买</div>
+                    </div>
+                </div>
+                <div class="product-card" onclick="openModal('祥福萌贴','¥25','祥福萌贴.png','IP表情包贴纸，软萌可爱，装饰好物。')">
+                    <div class="product-img"><img src="祥福萌贴.png" alt="祥福萌贴"></div>
+                    <div class="product-info">
+                        <div class="product-name">祥福萌贴</div>
+                        <div class="product-price">¥25</div>
+                        <div class="buy-btn">立即购买</div>
+                    </div>
+                </div>
+                <div class="product-card" onclick="openModal('宋韵花生绣贴','¥32','宋韵花生绣贴.png','立体刺绣，花生形象，文艺精致。')">
+                    <div class="product-img"><img src="宋韵花生绣贴.png" alt="宋韵花生绣贴"></div>
+                    <div class="product-info">
+                        <div class="product-name">宋韵花生绣贴</div>
+                        <div class="product-price">¥32</div>
+                        <div class="buy-btn">立即购买</div>
+                    </div>
+                </div>
+                <div class="product-card" onclick="openModal('书香福粒书签','¥29','书香福粒书签.png','亚克力材质，花生IP，寓意好事花生。')">
+                    <div class="product-img"><img src="书香福粒书签.png" alt="书香福粒书签"></div>
+                    <div class="product-info">
+                        <div class="product-name">书香福粒书签</div>
+                        <div class="product-price">¥29</div>
+                        <div class="buy-btn">立即购买</div>
+                    </div>
+                </div>
+                <div class="product-card" onclick="openModal('汴绣祥缘手绳','¥58','汴绣祥缘手绳.png','国风编织，花生主饰，好运相伴。')">
+                    <div class="product-img"><img src="汴绣祥缘手绳.png" alt="汴绣祥缘手绳"></div>
+                    <div class="product-info">
+                        <div class="product-name">汴绣祥缘手绳</div>
+                        <div class="product-price">¥58</div>
+                        <div class="buy-btn">立即购买</div>
+                    </div>
+                </div>
+                <div class="product-card" onclick="openModal('长生小伴毛绒玩具','¥69','长生小伴毛绒玩具.png','花生公仔，柔软亲肤，寓意吉祥。')">
+                    <div class="product-img"><img src="长生小伴毛绒玩具.png" alt="长生小伴毛绒玩具"></div>
+                    <div class="product-info">
+                        <div class="product-name">长生小伴毛绒玩具</div>
+                        <div class="product-price">¥69</div>
+                        <div class="buy-btn">立即购买</div>
+                    </div>
+                </div>
+                <div class="product-card" onclick="openModal('如意贴毛绒挂件','¥19','如意贴毛绒挂件.png','迷你花生毛绒挂件，内置磁铁可贴合，小巧可爱便于携带。')">
+                    <div class="product-img"><img src="如意贴毛绒挂件.png" alt="如意贴毛绒挂件"></div>
+                    <div class="product-info">
+                        <div class="product-name">如意贴毛绒挂件</div>
+                        <div class="product-price">¥19</div>
+                        <div class="buy-btn">立即购买</div>
+                    </div>
+                </div>
+                <div class="product-card" onclick="openModal('祥伴福缘磁吸钥匙扣','¥49','祥伴福缘磁吸钥匙扣.png','CP磁吸设计，情侣闺蜜好物。')">
+                    <div class="product-img"><img src="祥伴福缘磁吸钥匙扣.png" alt="祥伴福缘磁吸钥匙扣"></div>
+                    <div class="product-info">
+                        <div class="product-name">祥伴福缘磁吸钥匙扣</div>
+                        <div class="product-price">¥49</div>
+                        <div class="buy-btn">立即购买</div>
+                    </div>
+                </div>
+                <div class="product-card" onclick="openModal('汴城游忆冰箱贴','¥52','汴城游忆冰箱贴.png','开封地标+花生IP，旅行纪念。')">
+                    <div class="product-img"><img src="汴城游忆冰箱贴.png" alt="汴城游忆冰箱贴"></div>
+                    <div class="product-info">
+                        <div class="product-name">汴城游忆冰箱贴</div>
+                        <div class="product-price">¥52</div>
+                        <div class="buy-btn">立即购买</div>
+                    </div>
+                </div>
+                <div class="product-card" onclick="openModal('落花生香香薰蜡牌','¥35','落花生香香薰蜡牌.png','大豆蜡制作，菊花香调，清新安神。')">
+                    <div class="product-img"><img src="落花生香香薰蜡牌.png" alt="落花生香香薰蜡牌"></div>
+                    <div class="product-info">
+                        <div class="product-name">落花生香香薰蜡牌</div>
+                        <div class="product-price">¥35</div>
+                        <div class="buy-btn">立即购买</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 花生礼盒套装 -->
+        <div class="cat-box">
+            <div class="cat-title">🎁 花生礼盒套装</div>
+            <div class="product-grid">
+                <div class="product-card" onclick="openModal('祥瑞福气伴手礼盒','¥68','祥瑞福气伴手礼盒.png','内含高油酸花生、花生酥与文创小物，送礼首选。')">
+                    <div class="gift-tag">礼盒</div>
+                    <div class="product-img"><img src="祥瑞福气伴手礼盒.png" alt="祥瑞福气伴手礼盒"></div>
+                    <div class="product-info">
+                        <div class="product-name">祥瑞福气伴手礼盒</div>
+                        <div class="product-price">¥68</div>
+                        <div class="buy-btn">立即购买</div>
+                    </div>
+                </div>
+                <div class="product-card" onclick="openModal('好事花生治愈礼盒','¥88','好事花生治愈礼盒.png','花生零食+治愈文创，温馨美好。')">
+                    <div class="gift-tag">礼盒</div>
+                    <div class="product-img"><img src="好事花生治愈礼盒.png" alt="好事花生治愈礼盒"></div>
+                    <div class="product-info">
+                        <div class="product-name">好事花生治愈礼盒</div>
+                        <div class="product-price">¥88</div>
+                        <div class="buy-btn">立即购买</div>
+                    </div>
+                </div>
+                <div class="product-card" onclick="openModal('东京梦华研学套装','¥128','东京梦华研学套装.png','宋韵文化+花生科普，研学亲子专用。')">
+                    <div class="gift-tag">礼盒</div>
+                    <div class="product-img"><img src="东京梦华研学套装.png" alt="东京梦华研学套装"></div>
+                    <div class="product-info">
+                        <div class="product-name">东京梦华研学套装</div>
+                        <div class="product-price">¥168</div>
+                        <div class="buy-btn">立即购买</div>
+                    </div>
+                </div>
+                <div class="product-card" onclick="openModal('宋韵雅集商务馈赠','¥168','宋韵雅集商务馈赠.png','高端宋韵包装，商务节日大气馈赠。')">
+                    <div class="gift-tag">礼盒</div>
+                    <div class="product-img"><img src="宋韵雅集商务馈赠.png" alt="宋韵雅集商务馈赠"></div>
+                    <div class="product-info">
+                        <div class="product-name">宋韵雅集商务馈赠</div>
+                        <div class="product-price">¥268</div>
+                        <div class="buy-btn">立即购买</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <a href="index.html#product" class="back-btn">返回产品简介</a>
+    </div>
+
+    <!-- 购买弹窗 -->
+    <div class="modal" id="buyModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">×</span>
+            <div class="modal-img"><img src="" alt="" id="modalImg"></div>
+            <div class="modal-name" id="modalName">产品名称</div>
+            <div class="modal-price" id="modalPrice">¥0</div>
+            <div class="modal-desc" id="modalDesc">产品介绍</div>
+            <div class="num-box">
+                <button class="num-btn" onclick="changeNum(-1)">-</button>
+                <input type="number" class="num-input" id="modalNum" value="1" min="1" readonly>
+                <button class="num-btn" onclick="changeNum(1)">+</button>
+            </div>
+            <button class="buy-btn-modal" onclick="addCartFromModal()">加入购物车</button>
+        </div>
+    </div>
+
+    <script>
+        let currentModalProduct = {};
+        function openModal(name, price, imgUrl, desc) {
+            currentModalProduct = { name, price, img: imgUrl };
+            document.getElementById('modalName').innerText = name;
+            document.getElementById('modalPrice').innerText = price;
+            document.getElementById('modalDesc').innerText = desc;
+            document.getElementById('modalImg').src = imgUrl;
+            document.getElementById('modalImg').alt = name;
+            document.getElementById('modalNum').value = 1;
+            document.getElementById('buyModal').style.display = 'grid';
+        }
+        function closeModal() { document.getElementById('buyModal').style.display = 'none'; }
+        function changeNum(num) {
+            let val = parseInt(document.getElementById('modalNum').value) + num;
+            if (val >= 1) document.getElementById('modalNum').value = val;
+        }
+        function addCartFromModal() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const has = cart.find(item => item.name === currentModalProduct.name);
+            if (has) { has.num += 1; } else { cart.push({ ...currentModalProduct, num: 1 }); }
+            localStorage.setItem('cart', JSON.stringify(cart));
+            alert('加入购物车成功！');
+            closeModal();
+        }
+        window.onclick = function(e) {
+            if (e.target === document.getElementById('buyModal')) closeModal();
+        }
+    </script>
+</body>
+</html>
